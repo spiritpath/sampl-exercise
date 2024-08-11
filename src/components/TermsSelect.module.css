@@ -1,0 +1,20 @@
+.customCheckbox {
+    border: 3px solid #E2E8F0;
+    margin-bottom: -3px;
+}
+
+.customCheckbox:first-child {
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+}
+
+.customCheckbox:last-child {
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+}
+
+.customCheckbox:hover {
+    background-color: #EBF8FF;
+    border-color: #BEE3F8;
+    z-index: 100;
+}
