@@ -1,5 +1,7 @@
 import { Box, Button, Checkbox, Flex, Text, VStack } from "@chakra-ui/react";
 import styles from "./TermsSelect.module.css";
+import { useContext } from "react";
+import AppContext from "./AppContext";
 
 const terms = [
   {
@@ -21,6 +23,8 @@ const terms = [
 ];
 
 const VitaminSelect = () => {
+  const { activeStep, setActiveStep } = useContext(AppContext);
+
   return (
     <Box boxShadow="xl" borderRadius="10" pt="5" mb="7">
       <Flex p="5" pb="0">
@@ -40,12 +44,18 @@ const VitaminSelect = () => {
             flexDirection="row-reverse"
             justifyContent="space-between"
             value={term.id}
+            key={term.id}
           >
             {term.copy}
           </Checkbox>
         ))}
       </VStack>
-      <Button colorScheme="blue" w="100%" borderTopRadius="0">
+      <Button
+        onClick={() => setActiveStep(4)}
+        colorScheme="blue"
+        w="100%"
+        borderTopRadius="0"
+      >
         Confirm order
       </Button>
     </Box>

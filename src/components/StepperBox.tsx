@@ -1,13 +1,13 @@
 import {
   Box,
-  Progress,
   Step,
   StepIcon,
   StepIndicator,
   Stepper,
   StepStatus,
-  useSteps,
 } from "@chakra-ui/react";
+import { useContext } from "react";
+import AppContext from "./AppContext";
 
 const steps = [
   { title: "First", description: "Select vitamins" },
@@ -18,15 +18,7 @@ const steps = [
 ];
 
 const StepperBox = () => {
-  const { activeStep, setActiveStep } = useSteps({
-    index: 1,
-    count: steps.length,
-  });
-
-  const activeStepText = steps[activeStep].description;
-
-  const max = steps.length - 1;
-  const progressPercent = (activeStep / max) * 100;
+  const { activeStep } = useContext(AppContext);
 
   return (
     <Box position="relative" mb="7">
@@ -39,14 +31,6 @@ const StepperBox = () => {
           </Step>
         ))}
       </Stepper>
-      <Progress
-        value={progressPercent}
-        position="absolute"
-        height="3px"
-        width="full"
-        top="10px"
-        zIndex={-1}
-      />
     </Box>
   );
 };

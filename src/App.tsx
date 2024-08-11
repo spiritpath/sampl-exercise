@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import "./App.css";
 import StepperBox from "./components/StepperBox";
 import Footer from "./components/Footer";
@@ -10,20 +10,25 @@ import CopyBox from "./components/CopyBox";
 import DetailsForm from "./components/DetailsForm";
 import OrderSummary from "./components/OrderSummary";
 import TermsSelect from "./components/TermsSelect";
+import AppContext from "./components/AppContext";
 
 function App() {
+  const [activeStep, setActiveStep] = useState(0);
+
   return (
-    <Container maxW="md">
-      <Header />
-      <Hero />
-      <StepperBox />
-      <CopyBox />
-      <VitaminSelect />
-      <DetailsForm />
-      <OrderSummary />
-      <TermsSelect />
-      <Footer />
-    </Container>
+    <AppContext.Provider value={{ activeStep, setActiveStep }}>
+      <Container maxW="md">
+        <Header />
+        <Hero />
+        <StepperBox />
+        <CopyBox />
+        <VitaminSelect />
+        <DetailsForm />
+        <OrderSummary />
+        <TermsSelect />
+        <Footer />
+      </Container>
+    </AppContext.Provider>
   );
 }
 

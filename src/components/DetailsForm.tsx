@@ -6,8 +6,12 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
+import { useContext } from "react";
+import AppContext from "./AppContext";
 
 const DetailsForm = () => {
+  const { activeStep, setActiveStep } = useContext(AppContext);
+
   return (
     <Box boxShadow="xl" borderRadius="10" mb="7">
       <Text p="5">
@@ -39,7 +43,13 @@ const DetailsForm = () => {
           <Input placeholder="Postcode" />
         </FormControl>
       </Box>
-      <Button isDisabled={true} colorScheme="blue" w="100%" borderTopRadius="0">
+      <Button
+        onClick={() => setActiveStep(2)}
+        isDisabled={true}
+        colorScheme="blue"
+        w="100%"
+        borderTopRadius="0"
+      >
         Continue
       </Button>
     </Box>

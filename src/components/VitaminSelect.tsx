@@ -1,5 +1,7 @@
 import { Box, Button, Checkbox, Flex, Text, VStack } from "@chakra-ui/react";
 import styles from "./VitaminSelect.module.css";
+import { useContext } from "react";
+import AppContext from "./AppContext";
 
 const vitamins = [
   { name: "Multi-vitamin", id: 1 },
@@ -9,6 +11,8 @@ const vitamins = [
 ];
 
 const VitaminSelect = () => {
+  const { activeStep, setActiveStep } = useContext(AppContext);
+
   return (
     <Box boxShadow="xl" borderRadius="10" pt="5" mb="7">
       <Flex p="5" pb="0">
@@ -28,12 +32,18 @@ const VitaminSelect = () => {
             flexDirection="row-reverse"
             justifyContent="space-between"
             value={vitamin.id}
+            key={vitamin.id}
           >
             {vitamin.name}
           </Checkbox>
         ))}
       </VStack>
-      <Button colorScheme="blue" w="100%" borderTopRadius="0">
+      <Button
+        onClick={() => setActiveStep(1)}
+        colorScheme="blue"
+        w="100%"
+        borderTopRadius="0"
+      >
         Get Started
       </Button>
     </Box>
