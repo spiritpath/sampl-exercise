@@ -9,13 +9,7 @@ import {
 import { useContext } from "react";
 import AppContext from "./AppContext";
 
-const steps = [
-  { title: "First", description: "Select vitamins" },
-  { title: "Second", description: "About you" },
-  { title: "Third", description: "Payment method" },
-  { title: "Fourth", description: "Confirm order" },
-  { title: "Fifth", description: "Order submitted" },
-];
+const steps = [0, 1, 2, 3, 4];
 
 const StepperBox = () => {
   const { activeStep } = useContext(AppContext);
@@ -23,7 +17,7 @@ const StepperBox = () => {
   return (
     <Box position="relative" mb="7">
       <Stepper size="sm" index={activeStep} gap="0">
-        {steps.map((step, index) => (
+        {steps.map((index) => (
           <Step key={index}>
             <StepIndicator bg="white">
               <StepStatus complete={<StepIcon />} />

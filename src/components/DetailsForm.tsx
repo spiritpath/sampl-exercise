@@ -45,7 +45,7 @@ const DetailsForm = () => {
       </Box>
       <Button
         onClick={() => setActiveStep(2)}
-        isDisabled={true}
+        // isDisabled={true}
         colorScheme="blue"
         w="100%"
         borderTopRadius="0"
