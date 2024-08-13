@@ -9,6 +9,7 @@ import {
   FormLabel,
   Input,
   Table,
+  Tbody,
   Td,
   Text,
   Th,
@@ -16,9 +17,26 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import AppContext from "./AppContext";
+import FormContext from "./FormContext";
 
 const PaymentForm = () => {
-  const { activeStep, setActiveStep } = useContext(AppContext);
+  const { setActiveStep } = useContext(AppContext);
+  const { sampleForm, setSampleForm } = useContext(FormContext);
+
+  console.log("form onload", sampleForm);
+
+  const handleNextPage = () => {
+    setSampleForm({
+      ...sampleForm,
+      payment: {
+        cardnumber: "12341231412341234",
+        cardExp: "01/25",
+        cardCsv: "123",
+      },
+    });
+
+    setActiveStep(3);
+  };
 
   return (
     <>
@@ -27,22 +45,24 @@ const PaymentForm = () => {
           Payment details
         </Text>
         <Table>
-          <Tr>
-            <Th>Subtotal</Th>
-            <Td color="teal.300">Free</Td>
-          </Tr>
-          <Tr>
-            <Th>Tax</Th>
-            <Td>-</Td>
-          </Tr>
-          <Tr>
-            <Th>Shipping</Th>
-            <Td>&pound;1.79</Td>
-          </Tr>
-          <Tr>
-            <Th>Total</Th>
-            <Td color="teal.300">&pound;1.79</Td>
-          </Tr>
+          <Tbody>
+            <Tr>
+              <Th>Subtotal</Th>
+              <Td color="teal.300">Free</Td>
+            </Tr>
+            <Tr>
+              <Th>Tax</Th>
+              <Td>-</Td>
+            </Tr>
+            <Tr>
+              <Th>Shipping</Th>
+              <Td>&pound;1.79</Td>
+            </Tr>
+            <Tr>
+              <Th>Total</Th>
+              <Td color="teal.300">&pound;1.79</Td>
+            </Tr>
+          </Tbody>
         </Table>
         <Box position="relative" padding="10">
           <Divider my="3" />
@@ -53,27 +73,29 @@ const PaymentForm = () => {
         <Box mx="5">
           <FormControl mb="3" isRequired>
             <FormLabel display="none">Card number</FormLabel>
-            <Input placeholder="1234 1234 1234 1234 1234" />
+            <Input id="cardnumber" placeholder="1234 1234 1234 1234 1234" />
           </FormControl>
           <Flex>
             <FormControl mb="3" mr="3" isRequired>
               <FormLabel display="none">Expiry</FormLabel>
-              <Input placeholder="MM/YY" />
+              <Input id="cardExpiry" placeholder="MM/YY" />
             </FormControl>
             <FormControl mb="3" isRequired>
               <FormLabel display="none">CSV</FormLabel>
-              <Input placeholder="CSV" />
+              <Input id="cardCsv" placeholder="CSV" />
             </FormControl>
           </Flex>
           <Flex justifyContent="space-around">
-            <Checkbox py="3">Billing address is the same as shipping</Checkbox>
+            <Checkbox id="billingAddress" py="3">
+              Billing address is the same as shipping
+            </Checkbox>
           </Flex>
           <Text fontWeight="bold" textAlign="center" py="3" mb="2">
             You will not be charged until your sample request is approved
           </Text>
         </Box>
         <Button
-          onClick={() => setActiveStep(3)}
+          onClick={() => handleNextPage()}
           // isDisabled={true}
           colorScheme="blue"
           w="100%"

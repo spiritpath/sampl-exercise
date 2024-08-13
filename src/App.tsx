@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Header from "./components/Header";
 import AppContext from "./components/AppContext";
+import FormContext from "./components/FormContext";
 import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";
@@ -14,6 +15,7 @@ import Step5 from "./components/Step5";
 
 function App() {
   const [activeStep, setActiveStep] = useState(0);
+  const [sampleForm, setSampleForm] = useState({});
 
   const productId = 1345;
 
@@ -36,13 +38,15 @@ function App() {
 
   return (
     <AppContext.Provider value={{ activeStep, setActiveStep }}>
-      <Container maxW="md">
-        <Header />
-        <Hero />
-        <StepperBox />
-        {renderSwitch(activeStep)}
-        <Footer />
-      </Container>
+      <FormContext.Provider value={{ sampleForm, setSampleForm }}>
+        <Container maxW="md">
+          <Header />
+          <Hero />
+          <StepperBox />
+          <form>{renderSwitch(activeStep)}</form>
+          <Footer />
+        </Container>
+      </FormContext.Provider>
     </AppContext.Provider>
   );
 }

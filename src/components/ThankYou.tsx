@@ -1,6 +1,12 @@
 import { Box, Divider, Heading, Text } from "@chakra-ui/react";
+import FormContext from "./FormContext";
+import { useContext } from "react";
 
 const ThankYou = () => {
+  const { sampleForm } = useContext(FormContext);
+
+  console.log("form onload", sampleForm);
+
   return (
     <Box boxShadow="xl" borderRadius="10" p="5" mb="7">
       <Heading size="md" my="3">

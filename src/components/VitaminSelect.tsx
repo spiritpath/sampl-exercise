@@ -1,17 +1,48 @@
 import { Box, Button, Checkbox, Flex, Text, VStack } from "@chakra-ui/react";
 import styles from "./VitaminSelect.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AppContext from "./AppContext";
+import FormContext from "./FormContext";
 
 const vitamins = [
-  { name: "Multi-vitamin", id: 1 },
-  { name: "Vitamin D", id: 2 },
-  { name: "Collagen", id: 3 },
-  { name: "Omega 3", id: 4 },
+  { name: "Multi-vitamin", id: "1" },
+  { name: "Vitamin D", id: "2" },
+  { name: "Collagen", id: "3" },
+  { name: "Omega 3", id: "4" },
 ];
 
+let vitaminBasket: string[] = [];
+
 const VitaminSelect = () => {
-  const { activeStep, setActiveStep } = useContext(AppContext);
+  const { setActiveStep } = useContext(AppContext);
+  const { setSampleForm } = useContext(FormContext);
+  const [vitaminSelected, setVitaminSelected] = useState(false);
+
+  const toggleButton = (selectedVitaminsExist: boolean) => {
+    selectedVitaminsExist
+      ? setVitaminSelected(true)
+      : setVitaminSelected(false);
+  };
+
+  const handleVitaminSelect = (isChecked: boolean, vitaminId: string) => {
+    if (isChecked) {
+      vitaminBasket = [...vitaminBasket, vitaminId];
+      toggleButton(vitaminBasket.length > 0);
+    } else {
+      const filteredVitamins = vitaminBasket.filter(
+        (item) => item !== vitaminId
+      );
+      vitaminBasket = [...filteredVitamins];
+      toggleButton(vitaminBasket.length > 0);
+    }
+  };
+
+  const handleNextPage = (basket: string[]) => {
+    setSampleForm({
+      vitamins: [...basket],
+    });
+    setActiveStep(1);
+  };
 
   return (
     <Box boxShadow="xl" borderRadius="10" pt="5" mb="7">
@@ -33,16 +64,22 @@ const VitaminSelect = () => {
             justifyContent="space-between"
             value={vitamin.id}
             key={vitamin.id}
+            onChange={(e) => {
+              handleVitaminSelect(e.target.checked, vitamin.id);
+            }}
           >
             {vitamin.name}
           </Checkbox>
         ))}
       </VStack>
       <Button
-        onClick={() => setActiveStep(1)}
         colorScheme="blue"
         w="100%"
         borderTopRadius="0"
+        isDisabled={!vitaminSelected}
+        onClick={() => {
+          handleNextPage(vitaminBasket);
+        }}
       >
         Get Started
       </Button>

@@ -8,9 +8,30 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import AppContext from "./AppContext";
+import FormContext from "./FormContext";
 
 const DetailsForm = () => {
-  const { activeStep, setActiveStep } = useContext(AppContext);
+  const { setActiveStep } = useContext(AppContext);
+  const { sampleForm, setSampleForm } = useContext(FormContext);
+
+  console.log("form onload", sampleForm);
+
+  const handleNextPage = () => {
+    setSampleForm({
+      ...sampleForm,
+      details: {
+        name: "John Smith",
+        email: "john@gmail.com",
+      },
+      shipping: {
+        streetaddress: "1 Letsbe Avenue",
+        town: "London",
+        postcode: "NW3 2JJ",
+      },
+    });
+
+    setActiveStep(2);
+  };
 
   return (
     <Box boxShadow="xl" borderRadius="10" mb="7">
@@ -24,27 +45,27 @@ const DetailsForm = () => {
       <Box mx="5">
         <FormControl mb="3" isRequired>
           <FormLabel display="none">Full name</FormLabel>
-          <Input placeholder="Full name" />
+          <Input id="fullname" placeholder="Full name" />
         </FormControl>
         <FormControl mb="3" isRequired>
           <FormLabel display="none">Email address</FormLabel>
-          <Input type="email" placeholder="Email address" />
+          <Input id="email" type="email" placeholder="Email address" />
         </FormControl>
         <FormControl mb="3" isRequired>
           <FormLabel display="none">Street address</FormLabel>
-          <Input placeholder="Street address" />
+          <Input id="streetaddress" placeholder="Street address" />
         </FormControl>
         <FormControl mb="3" isRequired>
           <FormLabel display="none">Town / city</FormLabel>
-          <Input placeholder="Town / city" />
+          <Input id="town" placeholder="Town / city" />
         </FormControl>
         <FormControl mb="3" isRequired>
           <FormLabel display="none">Postcode</FormLabel>
-          <Input placeholder="Postcode" />
+          <Input id="postcode" placeholder="Postcode" />
         </FormControl>
       </Box>
       <Button
-        onClick={() => setActiveStep(2)}
+        onClick={() => handleNextPage()}
         // isDisabled={true}
         colorScheme="blue"
         w="100%"

@@ -2,6 +2,7 @@ import { Box, Button, Checkbox, Flex, Text, VStack } from "@chakra-ui/react";
 import styles from "./TermsSelect.module.css";
 import { useContext } from "react";
 import AppContext from "./AppContext";
+import FormContext from "./FormContext";
 
 const terms = [
   {
@@ -23,7 +24,19 @@ const terms = [
 ];
 
 const VitaminSelect = () => {
-  const { activeStep, setActiveStep } = useContext(AppContext);
+  const { setActiveStep } = useContext(AppContext);
+  const { sampleForm, setSampleForm } = useContext(FormContext);
+
+  console.log("form onload", sampleForm);
+
+  const handleNextPage = () => {
+    setSampleForm({
+      ...sampleForm,
+      termsAccepted: true,
+    });
+
+    setActiveStep(4);
+  };
 
   return (
     <Box boxShadow="xl" borderRadius="10" pt="5" mb="7">
@@ -51,7 +64,7 @@ const VitaminSelect = () => {
         ))}
       </VStack>
       <Button
-        onClick={() => setActiveStep(4)}
+        onClick={() => handleNextPage()}
         colorScheme="blue"
         w="100%"
         borderTopRadius="0"
