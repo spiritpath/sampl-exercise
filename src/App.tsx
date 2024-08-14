@@ -43,7 +43,7 @@ function App() {
           <Header />
           <Hero />
           <StepperBox />
-          <form>{renderSwitch(activeStep)}</form>
+          {renderSwitch(activeStep)}
           <Footer />
         </Container>
       </FormContext.Provider>

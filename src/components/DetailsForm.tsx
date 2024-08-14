@@ -6,27 +6,38 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AppContext from "./AppContext";
 import FormContext from "./FormContext";
+import { useForm } from "react-hook-form";
 
 const DetailsForm = () => {
+  const {
+    register,
+    formState: { errors, isValid },
+    getValues,
+  } = useForm({ mode: "all" });
+
+  console.log("form values", getValues());
+  console.log("form isvalid", isValid);
+
   const { setActiveStep } = useContext(AppContext);
   const { sampleForm, setSampleForm } = useContext(FormContext);
 
   console.log("form onload", sampleForm);
 
   const handleNextPage = () => {
+    const formValues = getValues();
     setSampleForm({
       ...sampleForm,
       details: {
-        name: "John Smith",
-        email: "john@gmail.com",
+        name: formValues.fullname,
+        email: formValues.email,
       },
       shipping: {
-        streetaddress: "1 Letsbe Avenue",
-        town: "London",
-        postcode: "NW3 2JJ",
+        streetaddress: formValues.streeaddress,
+        town: formValues.town,
+        postcode: formValues.postcode,
       },
     });
 
@@ -43,30 +54,69 @@ const DetailsForm = () => {
         About you
       </Text>
       <Box mx="5">
-        <FormControl mb="3" isRequired>
-          <FormLabel display="none">Full name</FormLabel>
-          <Input id="fullname" placeholder="Full name" />
-        </FormControl>
-        <FormControl mb="3" isRequired>
-          <FormLabel display="none">Email address</FormLabel>
-          <Input id="email" type="email" placeholder="Email address" />
-        </FormControl>
-        <FormControl mb="3" isRequired>
-          <FormLabel display="none">Street address</FormLabel>
-          <Input id="streetaddress" placeholder="Street address" />
-        </FormControl>
-        <FormControl mb="3" isRequired>
-          <FormLabel display="none">Town / city</FormLabel>
-          <Input id="town" placeholder="Town / city" />
-        </FormControl>
-        <FormControl mb="3" isRequired>
-          <FormLabel display="none">Postcode</FormLabel>
-          <Input id="postcode" placeholder="Postcode" />
-        </FormControl>
+        <form>
+          <FormControl mb="3" isRequired>
+            <FormLabel display="none">Full name</FormLabel>
+            <Input
+              {...register("fullname", {
+                required: true,
+              })}
+              id="fullname"
+              placeholder="Full name"
+              type="text"
+            />
+            {errors.fullname?.type === "required" && <p>Required</p>}
+            {errors.fullname?.type === "pattern" && <p>Letters only</p>}
+          </FormControl>
+          <FormControl mb="3" isRequired>
+            <FormLabel display="none">Email address</FormLabel>
+            <Input
+              {...register("email", {
+                required: true,
+                pattern: {
+                  value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                  message: "Invalid email address",
+                },
+              })}
+              id="email"
+              type="email"
+              placeholder="Email address"
+            />
+            {errors.email?.type === "required" && <p>Required</p>}
+            {errors.email?.type === "pattern" && <p>Invalid email</p>}
+          </FormControl>
+          <FormControl mb="3" isRequired>
+            <FormLabel display="none">Street address</FormLabel>
+            <Input
+              {...register("streetaddress", { required: true })}
+              id="streetaddress"
+              placeholder="Street address"
+            />
+            {errors.streetaddress?.type === "required" && <p>Required</p>}
+          </FormControl>
+          <FormControl mb="3" isRequired>
+            <FormLabel display="none">Town / city</FormLabel>
+            <Input
+              {...register("town", { required: true })}
+              id="town"
+              placeholder="Town / city"
+            />
+            {errors.town?.type === "required" && <p>Required</p>}
+          </FormControl>
+          <FormControl mb="3" isRequired>
+            <FormLabel display="none">Postcode</FormLabel>
+            <Input
+              {...register("postcode", { required: true })}
+              id="postcode"
+              placeholder="Postcode"
+            />
+            {errors.postcode?.type === "required" && <p>Required</p>}
+          </FormControl>
+        </form>
       </Box>
       <Button
         onClick={() => handleNextPage()}
-        // isDisabled={true}
+        isDisabled={!isValid}
         colorScheme="blue"
         w="100%"
         borderTopRadius="0"

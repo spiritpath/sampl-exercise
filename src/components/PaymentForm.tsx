@@ -71,28 +71,30 @@ const PaymentForm = () => {
           </AbsoluteCenter>
         </Box>
         <Box mx="5">
-          <FormControl mb="3" isRequired>
-            <FormLabel display="none">Card number</FormLabel>
-            <Input id="cardnumber" placeholder="1234 1234 1234 1234 1234" />
-          </FormControl>
-          <Flex>
-            <FormControl mb="3" mr="3" isRequired>
-              <FormLabel display="none">Expiry</FormLabel>
-              <Input id="cardExpiry" placeholder="MM/YY" />
-            </FormControl>
+          <form>
             <FormControl mb="3" isRequired>
-              <FormLabel display="none">CSV</FormLabel>
-              <Input id="cardCsv" placeholder="CSV" />
+              <FormLabel display="none">Card number</FormLabel>
+              <Input id="cardnumber" placeholder="1234 1234 1234 1234 1234" />
             </FormControl>
-          </Flex>
-          <Flex justifyContent="space-around">
-            <Checkbox id="billingAddress" py="3">
-              Billing address is the same as shipping
-            </Checkbox>
-          </Flex>
-          <Text fontWeight="bold" textAlign="center" py="3" mb="2">
-            You will not be charged until your sample request is approved
-          </Text>
+            <Flex>
+              <FormControl mb="3" mr="3" isRequired>
+                <FormLabel display="none">Expiry</FormLabel>
+                <Input id="cardExpiry" placeholder="MM/YY" />
+              </FormControl>
+              <FormControl mb="3" isRequired>
+                <FormLabel display="none">CSV</FormLabel>
+                <Input id="cardCsv" placeholder="CSV" />
+              </FormControl>
+            </Flex>
+            <Flex justifyContent="space-around">
+              <Checkbox id="billingAddress" py="3">
+                Billing address is the same as shipping
+              </Checkbox>
+            </Flex>
+            <Text fontWeight="bold" textAlign="center" py="3" mb="2">
+              You will not be charged until your sample request is approved
+            </Text>
+          </form>
         </Box>
         <Button
           onClick={() => handleNextPage()}
