@@ -40,8 +40,6 @@ const DetailsForm = () => {
   const { setActiveStep } = useContext(AppContext);
   const { sampleForm, setSampleForm } = useContext(FormContext);
 
-  // console.log("does data already exist", sampleForm);
-
   const handleNextPage = () => {
     const formValues = getValues();
     setSampleForm({
