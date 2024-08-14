@@ -20,10 +20,6 @@ const DetailsForm = () => {
 
   const [validPostcode, setValidPostcode] = useState(false);
 
-  // console.log("form values", getValues());
-  console.log("form isvalid", isValid);
-  // console.log("valid postcode", validPostcode);
-
   const validatePostcode = async (thisPostCode: string) => {
     let encodedValue = encodeURI(thisPostCode);
     try {
@@ -37,7 +33,6 @@ const DetailsForm = () => {
       ).json();
       setValidPostcode(data.result);
     } catch (err) {
-      // console.log(err.message);
       console.log("error");
     }
   };
@@ -46,7 +41,6 @@ const DetailsForm = () => {
   const { sampleForm, setSampleForm } = useContext(FormContext);
 
   // console.log("does data already exist", sampleForm);
-  // console.log("form onload", sampleForm);
 
   const handleNextPage = () => {
     const formValues = getValues();
@@ -128,7 +122,10 @@ const DetailsForm = () => {
           <FormControl mb="3" isRequired>
             <FormLabel display="none">Postcode</FormLabel>
             <Input
-              {...register("postcode", { required: true })}
+              {...register("postcode", {
+                required: true,
+                validate: () => validPostcode,
+              })}
               id="postcode"
               placeholder="Postcode"
               onChange={(e) => validatePostcode(e.target.value)}
