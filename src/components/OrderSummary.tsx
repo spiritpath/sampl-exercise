@@ -1,9 +1,13 @@
 import { Box, Divider, Flex, Image, Link, Text } from "@chakra-ui/react";
 import { useContext } from "react";
 import AppContext from "./AppContext";
+import FormContext from "./FormContext";
 
 const OrderSummary = () => {
   const { activeStep, setActiveStep } = useContext(AppContext);
+  const { sampleForm } = useContext(FormContext);
+
+  const hiddenCardNum = sampleForm?.payment?.cardnumber?.slice(12);
 
   return (
     <Box boxShadow="xl" borderRadius="10" p="5" mb="7">
@@ -30,8 +34,8 @@ const OrderSummary = () => {
           <Text as="b">About you</Text>
           <Flex>
             <Text flex="1">
-              John Smith <br />
-              jonsmith@someemail.com
+              {sampleForm?.details?.name} <br />
+              {sampleForm?.details?.email}
             </Text>
             <Link onClick={() => setActiveStep(1)}>Edit</Link>
           </Flex>
@@ -39,11 +43,11 @@ const OrderSummary = () => {
           <Text as="b">Shipping</Text>
           <Flex>
             <Text flex="1">
-              1 Apple Way
+              {sampleForm?.shipping?.streetaddress}
               <br />
-              Brighton
+              {sampleForm?.shipping?.town}
               <br />
-              BN1 4NX
+              {sampleForm?.shipping?.postcode}
             </Text>
             <Link onClick={() => setActiveStep(1)}>Edit</Link>
           </Flex>
@@ -55,7 +59,7 @@ const OrderSummary = () => {
           <Text as="b">Payment details</Text>
           <Flex>
             <Text flex="1">
-              <strong>&pound;1.79</strong> - Visa ending ****1234
+              <strong>&pound;1.79</strong> - Visa ending ****{hiddenCardNum}
             </Text>
             <Link onClick={() => setActiveStep(2)}>Edit</Link>
           </Flex>

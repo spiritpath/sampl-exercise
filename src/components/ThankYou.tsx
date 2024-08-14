@@ -5,7 +5,7 @@ import { useContext } from "react";
 const ThankYou = () => {
   const { sampleForm } = useContext(FormContext);
 
-  console.log("form onload", sampleForm);
+  console.log("form payload", sampleForm);
 
   return (
     <Box boxShadow="xl" borderRadius="10" p="5" mb="7">
