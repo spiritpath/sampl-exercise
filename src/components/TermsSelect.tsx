@@ -1,31 +1,49 @@
 import { Box, Button, Checkbox, Flex, Text, VStack } from "@chakra-ui/react";
 import styles from "./TermsSelect.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AppContext from "./AppContext";
 import FormContext from "./FormContext";
 
 const terms = [
   {
     copy: "Terms terms terms terms terms terms Terms terms terms terms terms terms",
-    id: 1,
+    id: "1",
   },
   {
     copy: "Terms terms terms terms terms terms Terms terms terms terms terms terms",
-    id: 2,
+    id: "2",
   },
   {
     copy: "Terms terms terms terms terms terms Terms terms terms terms terms terms",
-    id: 3,
+    id: "3",
   },
   {
     copy: "Terms terms terms terms terms terms Terms terms terms terms terms terms",
-    id: 4,
+    id: "4",
   },
 ];
 
-const VitaminSelect = () => {
+let termsSelected: string[] = [];
+
+const TermsSelect = () => {
   const { setActiveStep } = useContext(AppContext);
   const { sampleForm, setSampleForm } = useContext(FormContext);
+  const [allTermsAccepted, setAllTermsAccepted] = useState(false);
+
+  const toggleButton = (termsAccepted: boolean) => {
+    termsAccepted ? setAllTermsAccepted(true) : setAllTermsAccepted(false);
+  };
+
+  const handleTermSelect = (isChecked: boolean, termId: string) => {
+    if (isChecked) {
+      termsSelected = [...termsSelected, termId];
+      toggleButton(termsSelected.length === terms.length);
+    } else {
+      const filteredTerms = termsSelected.filter((item) => item !== termId);
+      termsSelected = [...filteredTerms];
+      toggleButton(termsSelected.length === terms.length);
+    }
+  };
 
   console.log("form onload", sampleForm);
 
@@ -58,6 +76,9 @@ const VitaminSelect = () => {
             justifyContent="space-between"
             value={term.id}
             key={term.id}
+            onChange={(e) => {
+              handleTermSelect(e.target.checked, term.id);
+            }}
           >
             {term.copy}
           </Checkbox>
@@ -65,6 +86,7 @@ const VitaminSelect = () => {
       </VStack>
       <Button
         onClick={() => handleNextPage()}
+        isDisabled={!allTermsAccepted}
         colorScheme="blue"
         w="100%"
         borderTopRadius="0"
@@ -75,4 +97,4 @@ const VitaminSelect = () => {
   );
 };
 
-export default VitaminSelect;
+export default TermsSelect;
