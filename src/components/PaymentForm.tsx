@@ -30,9 +30,9 @@ const PaymentForm = () => {
     getValues,
   } = useForm({ mode: "all" });
 
-  console.log("form onload", sampleForm);
-  console.log("form values", getValues());
-  console.log("form isvalid", isValid);
+  // console.log("form onload", sampleForm);
+  // console.log("form values", getValues());
+  // console.log("form isvalid", isValid);
 
   const handleNextPage = () => {
     const formValues = getValues();

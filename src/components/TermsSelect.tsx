@@ -45,7 +45,7 @@ const TermsSelect = () => {
     }
   };
 
-  console.log("form onload", sampleForm);
+  // console.log("form onload", sampleForm);
 
   const handleNextPage = () => {
     setSampleForm({
