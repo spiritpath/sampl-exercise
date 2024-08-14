@@ -1,6 +1,6 @@
 import { Box, Image } from "@chakra-ui/react";
 import { useContext } from "react";
-import AppContext from "./AppContext";
+import AppContext from "../state-management/AppContext";
 
 const Hero = () => {
   const { activeStep } = useContext(AppContext);

@@ -16,8 +16,8 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import AppContext from "./AppContext";
-import FormContext from "./FormContext";
+import AppContext from "../state-management/AppContext";
+import FormContext from "../state-management/FormContext";
 import { useForm } from "react-hook-form";
 
 const PaymentForm = () => {

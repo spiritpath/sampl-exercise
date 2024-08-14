@@ -1,7 +1,7 @@
 import { Box, Divider, Flex, Image, Link, Text } from "@chakra-ui/react";
 import { useContext } from "react";
-import AppContext from "./AppContext";
-import FormContext from "./FormContext";
+import AppContext from "../state-management/AppContext";
+import FormContext from "../state-management/FormContext";
 
 const OrderSummary = () => {
   const { activeStep, setActiveStep } = useContext(AppContext);

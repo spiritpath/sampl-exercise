@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Container } from "@chakra-ui/react";
-import "./App.css";
 import StepperBox from "./components/StepperBox";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Header from "./components/Header";
-import AppContext from "./components/AppContext";
-import FormContext from "./components/FormContext";
+import AppContext from "./state-management/AppContext";
+import FormContext from "./state-management/FormContext";
 import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";

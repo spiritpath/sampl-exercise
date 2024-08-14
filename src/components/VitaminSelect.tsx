@@ -1,8 +1,8 @@
 import { Box, Button, Checkbox, Flex, Text, VStack } from "@chakra-ui/react";
 import styles from "./VitaminSelect.module.css";
 import { useContext, useState } from "react";
-import AppContext from "./AppContext";
-import FormContext from "./FormContext";
+import AppContext from "../state-management/AppContext";
+import FormContext from "../state-management/FormContext";
 
 const vitamins = [
   { name: "Multi-vitamin", id: "1" },

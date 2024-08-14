@@ -1,5 +1,5 @@
 import { Box, Divider, Heading, Text } from "@chakra-ui/react";
-import FormContext from "./FormContext";
+import FormContext from "../state-management/FormContext";
 import { useContext } from "react";
 
 const ThankYou = () => {
