@@ -20,17 +20,22 @@ const DetailsForm = () => {
 
   const [validPostcode, setValidPostcode] = useState(false);
 
-  console.log("form values", getValues());
+  // console.log("form values", getValues());
   console.log("form isvalid", isValid);
   // console.log("valid postcode", validPostcode);
 
-  const validatePostcode = async () => {
-    let postcode = getValues("postcode");
+  const validatePostcode = async (thisPostCode: string) => {
+    let encodedValue = encodeURI(thisPostCode);
     try {
       const data = await (
-        await fetch(`https://api.postcodes.io/postcodes/${postcode}/validate`)
+        await fetch(
+          `https://api.postcodes.io/postcodes/${encodedValue}/validate`,
+          {
+            method: "GET",
+          }
+        )
       ).json();
-      setValidPostcode(data);
+      setValidPostcode(data.result);
     } catch (err) {
       // console.log(err.message);
       console.log("error");
@@ -40,7 +45,8 @@ const DetailsForm = () => {
   const { setActiveStep } = useContext(AppContext);
   const { sampleForm, setSampleForm } = useContext(FormContext);
 
-  console.log("form onload", sampleForm);
+  // console.log("does data already exist", sampleForm);
+  // console.log("form onload", sampleForm);
 
   const handleNextPage = () => {
     const formValues = getValues();
@@ -125,7 +131,7 @@ const DetailsForm = () => {
               {...register("postcode", { required: true })}
               id="postcode"
               placeholder="Postcode"
-              // onChange={() => validatePostcode()}
+              onChange={(e) => validatePostcode(e.target.value)}
             />
             {errors.postcode?.type === "required" && <p>Required</p>}
           </FormControl>
