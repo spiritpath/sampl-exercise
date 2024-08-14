@@ -6,7 +6,7 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppContext from "./AppContext";
 import FormContext from "./FormContext";
 import { useForm } from "react-hook-form";
@@ -18,8 +18,24 @@ const DetailsForm = () => {
     getValues,
   } = useForm({ mode: "all" });
 
+  const [validPostcode, setValidPostcode] = useState(false);
+
   console.log("form values", getValues());
   console.log("form isvalid", isValid);
+  // console.log("valid postcode", validPostcode);
+
+  const validatePostcode = async () => {
+    let postcode = getValues("postcode");
+    try {
+      const data = await (
+        await fetch(`https://api.postcodes.io/postcodes/${postcode}/validate`)
+      ).json();
+      setValidPostcode(data);
+    } catch (err) {
+      // console.log(err.message);
+      console.log("error");
+    }
+  };
 
   const { setActiveStep } = useContext(AppContext);
   const { sampleForm, setSampleForm } = useContext(FormContext);
@@ -35,7 +51,7 @@ const DetailsForm = () => {
         email: formValues.email,
       },
       shipping: {
-        streetaddress: formValues.streeaddress,
+        streetaddress: formValues.streetaddress,
         town: formValues.town,
         postcode: formValues.postcode,
       },
@@ -109,6 +125,7 @@ const DetailsForm = () => {
               {...register("postcode", { required: true })}
               id="postcode"
               placeholder="Postcode"
+              // onChange={() => validatePostcode()}
             />
             {errors.postcode?.type === "required" && <p>Required</p>}
           </FormControl>

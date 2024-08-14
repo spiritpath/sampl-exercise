@@ -18,20 +18,30 @@ import {
 import { useContext } from "react";
 import AppContext from "./AppContext";
 import FormContext from "./FormContext";
+import { useForm } from "react-hook-form";
 
 const PaymentForm = () => {
   const { setActiveStep } = useContext(AppContext);
   const { sampleForm, setSampleForm } = useContext(FormContext);
 
+  const {
+    register,
+    formState: { errors, isValid },
+    getValues,
+  } = useForm({ mode: "all" });
+
   console.log("form onload", sampleForm);
+  console.log("form values", getValues());
+  console.log("form isvalid", isValid);
 
   const handleNextPage = () => {
+    const formValues = getValues();
     setSampleForm({
       ...sampleForm,
       payment: {
-        cardnumber: "12341231412341234",
-        cardExp: "01/25",
-        cardCsv: "123",
+        cardnumber: formValues.cardNumber,
+        cardExp: formValues.cardExpiry,
+        cardCsv: formValues.cardCsv,
       },
     });
 
@@ -74,16 +84,55 @@ const PaymentForm = () => {
           <form>
             <FormControl mb="3" isRequired>
               <FormLabel display="none">Card number</FormLabel>
-              <Input id="cardnumber" placeholder="1234 1234 1234 1234 1234" />
+              <Input
+                {...register("cardNumber", {
+                  required: true,
+                  pattern: {
+                    value: /^(?:\d[ -]*?){13,16}$/,
+                    message: "Invalid card number",
+                  },
+                })}
+                id="cardNumber"
+                placeholder="1234 1234 1234 1234 1234"
+              />
+              {errors.cardNumber?.type === "required" && <p>Required</p>}
+              {errors.cardNumber?.type === "pattern" && (
+                <p>Invalid number format</p>
+              )}
             </FormControl>
             <Flex>
               <FormControl mb="3" mr="3" isRequired>
                 <FormLabel display="none">Expiry</FormLabel>
-                <Input id="cardExpiry" placeholder="MM/YY" />
+                <Input
+                  {...register("cardExpiry", {
+                    required: true,
+                    pattern: {
+                      value: /^(0[1-9]|1[0-2])\/?([0-9]{2})$/,
+                      message: "Invalid date format",
+                    },
+                  })}
+                  id="cardExpiry"
+                  placeholder="MM/YY"
+                />
+                {errors.cardExpiry?.type === "required" && <p>Required</p>}
+                {errors.cardExpiry?.type === "pattern" && (
+                  <p>Invalid date format</p>
+                )}
               </FormControl>
               <FormControl mb="3" isRequired>
                 <FormLabel display="none">CSV</FormLabel>
-                <Input id="cardCsv" placeholder="CSV" />
+                <Input
+                  {...register("cardCsv", {
+                    required: true,
+                    maxLength: 3,
+                    minLength: 3,
+                  })}
+                  id="cardCsv"
+                  placeholder="CSV"
+                />
+                {errors.cardCsv?.type === "required" && <p>Required</p>}
+                {errors.cardCsv?.type === "maxLength" && <p>3 chars max</p>}
+                {errors.cardCsv?.type === "minLength" && <p>3 chars min</p>}
               </FormControl>
             </Flex>
             <Flex justifyContent="space-around">
@@ -98,7 +147,7 @@ const PaymentForm = () => {
         </Box>
         <Button
           onClick={() => handleNextPage()}
-          // isDisabled={true}
+          isDisabled={!isValid}
           colorScheme="blue"
           w="100%"
           borderTopRadius="0"
