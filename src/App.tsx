@@ -17,8 +17,6 @@ function App() {
   const [activeStep, setActiveStep] = useState(0);
   const [sampleForm, setSampleForm] = useState({});
 
-  const productId = 1345;
-
   const renderSwitch = (param: number) => {
     switch (param) {
       case 0:

@@ -39,6 +39,7 @@ const VitaminSelect = () => {
 
   const handleNextPage = (basket: string[]) => {
     setSampleForm({
+      productId: "1345",
       vitamins: [...basket],
     });
     setActiveStep(1);
