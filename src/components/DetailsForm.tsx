@@ -124,13 +124,18 @@ const DetailsForm = () => {
             <Input
               {...register("postcode", {
                 required: true,
-                validate: () => validPostcode,
+                validate: {
+                  isPostcodeValid: () => validPostcode,
+                },
               })}
               id="postcode"
               placeholder="Postcode"
               onChange={(e) => validatePostcode(e.target.value)}
             />
             {errors.postcode?.type === "required" && <p>Required</p>}
+            {errors.postcode?.type === "isPostcodeValid" && (
+              <p>Please enter valid postcode</p>
+            )}
           </FormControl>
         </form>
       </Box>
