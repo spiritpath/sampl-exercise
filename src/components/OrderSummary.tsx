@@ -13,7 +13,9 @@ const OrderSummary = () => {
     <Box boxShadow="xl" borderRadius="10" p="5" mb="7">
       {(activeStep === 3 || activeStep === 4) && (
         <>
-          <Text as="b">Your order</Text>
+          <Text fontWeight="bold" mb="2">
+            Your order
+          </Text>
           <Flex>
             <Box mr="5">
               <Image

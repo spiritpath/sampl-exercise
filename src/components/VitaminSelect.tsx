@@ -3,6 +3,7 @@ import styles from "./VitaminSelect.module.css";
 import { useContext, useState } from "react";
 import AppContext from "../state-management/AppContext";
 import FormContext from "../state-management/FormContext";
+import { useParams } from "react-router-dom";
 
 const vitamins = [
   { name: "Multi-vitamin", id: "1" },
@@ -17,6 +18,9 @@ const VitaminSelect = () => {
   const { setActiveStep } = useContext(AppContext);
   const { setSampleForm } = useContext(FormContext);
   const [vitaminSelected, setVitaminSelected] = useState(false);
+
+  const params = useParams();
+  // WITH THE SAMPLE ID IN THE URL WE CAN GET PRODUCT SPECIFIC DATA
 
   const toggleButton = (selectedVitaminsExist: boolean) => {
     selectedVitaminsExist
@@ -39,7 +43,7 @@ const VitaminSelect = () => {
 
   const handleNextPage = (basket: string[]) => {
     setSampleForm({
-      productId: "1345",
+      productId: params.sampleID,
       vitamins: [...basket],
     });
     setActiveStep(1);
